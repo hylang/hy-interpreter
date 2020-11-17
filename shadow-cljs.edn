@@ -9,8 +9,6 @@
  :builds       {:app {:target     :browser
                       :output-dir "public/js"
                       :asset-path "/js"
-                      :closure-defines {hyinterpreter.events/APP_API_BASE
-                                        #shadow/env "https://ftzx6qqxhk.execute-api.us-east-2.amazonaws.com/dev"}
                       :modules    {:app {:entries [hyinterpreter.core]}}
                       :devtools   {:after-load hyinterpreter.core/mount-root}}}
 

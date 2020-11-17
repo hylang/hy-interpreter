@@ -3,7 +3,7 @@
             [day8.re-frame.http-fx]
             [ajax.core :as ajax]))
 
-(def APP_API_BASE  "https://ftzx6qqxhk.execute-api.us-east-2.amazonaws.com/dev")
+(goog-define REACT_APP_API_BASE "localhost:5000")
 
 (rf/reg-event-db
  :init
@@ -22,7 +22,7 @@
             (assoc-in [:sidebar :show-twirly] true)
             (assoc-in [:sidebar :tab] :output))
     :http-xhrio {:method :post
-                 :uri (str APP_API_BASE "/interpreter/compile")
+                 :uri (str REACT_APP_API_BASE "/interpreter/compile")
                  :timeout 10000
                  :params {:code code}
                  :format (ajax/json-request-format)

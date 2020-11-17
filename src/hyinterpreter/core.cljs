@@ -8,7 +8,7 @@
    [hyinterpreter.subs :as subs]
    ["react-codemirror2" :as cm]
    ["react-split-pane" :default SplitPane]
-   ["codemirror/mode/javascript/javascript"]
+   ["codemirror/mode/python/python"]
    ["codemirror/mode/clojure/clojure"]
    ["codemirror/addon/edit/closebrackets"]))
 
@@ -53,17 +53,20 @@
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
         [:div#playground-editor.col.p-0
-         [:> cm/Controlled
-          {:value @code
-           :onBeforeChange (fn [editor data value] (reset! code value))
+         [:> cm/UnControlled
+          {:value default-code-snippet
+           :onChange (fn [editor data value]
+                       (reset! code value))
            :onKeyDown (fn [editor event]
                         (when (and (.getModifierState event "Control")
                                    (= event.key "Enter"))
                           (rf/dispatch [:submit-code @code])))
            :className "h-100"
            :options {:mode "clojure"
+                     :smartIndent false
+                     :electricChars false
                      :theme "material-darker"
-                     :autoCloseBrackets true
+                     ;; :autoCloseBrackets true
                      :lineNumbers true}}]]]])))
 
 (defn ^:private sidebar-python []
@@ -71,7 +74,7 @@
     [:> cm/Controlled
      {:value compiled-python
       :className "h-100"
-      :options {:mode "clojure"
+      :options {:mode "python"
                 :theme "material-darker"
                 :readOnly "nocursor"
                 :autoCloseBrackets true

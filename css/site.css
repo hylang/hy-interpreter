@@ -21,6 +21,18 @@ html, body {
     padding-left: 10px;
 }
 
+/* bootstrap overrides */
+.nav-pills .nav-link {
+    border-radius: 0;
+    color: #fff;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #fff0;
+    border-bottom: 1px solid #719af4;
+    color: #719af4;
+}
+
 
 /* Split Pane */
 .Resizer {

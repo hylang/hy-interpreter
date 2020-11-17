@@ -5,7 +5,8 @@
   },
   "scripts": {
     "predeploy": "rm -rf ./public/js && shadow-cljs release app",
-    "deploy": "gh-pages -d public"
+    "deploy": "gh-pages -d public",
+    "clean": "rm -rf ./public/js"
   },
   "dependencies": {
     "codemirror": "^5.58.2",

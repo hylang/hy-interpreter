@@ -9,7 +9,8 @@
  :builds       {:app {:target     :browser
                       :output-dir "public/js"
                       :asset-path "/js"
-                      :modules    {:app {:entries [hyinterpreter.core]}}
+                      :modules    {:main
+                                   {:entries [hyinterpreter.core]}}
                       :devtools   {:after-load hyinterpreter.core/mount-root}}}
 
  :dev-http     {3000 {:root    "public"

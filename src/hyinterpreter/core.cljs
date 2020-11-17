@@ -12,6 +12,19 @@
    ["codemirror/mode/clojure/clojure"]
    ["codemirror/addon/edit/closebrackets"]))
 
+(def default-code-snippet
+  "(import [operator [add]])
+(require [hy.contrib.walk [let]])
+
+(defn spy [x] (print x) x)
+
+(let [words [\"Hello\" \"World\" \"!\"]]
+  (->> words
+       reversed
+       (map spy)
+       (map str.upper)
+       (reduce add)))")
+
 ;; -------------------------
 ;; Views
 (defn carrot-right [size]
@@ -21,7 +34,7 @@
    [:path {:d "M12.14 8.753l-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"}]])
 
 (defn editor []
-  (let [code (r/atom  "(setv words [\"Hello\" \"World\" \"!\"])\n(for [word words]\n  (print word))")]
+  (let [code (r/atom default-code-snippet)]
     (fn []
       [:div.container-fluid.h-100
        [:div.row
@@ -74,17 +87,28 @@
                 :readOnly "nocursor"
                 :autoCloseBrackets true}}]))
 
+(defn tab [sym label dispatch-fn active?]
+  [:li.nav-item
+   {:style {:cursor "pointer"}}
+   [:a.nav-link
+    {:class (when active? "active")
+     :on-click #(dispatch-fn sym)}
+    label]])
+
+(defn sidebar-tabs [current-tab]
+  (let [change-tab #(rf/dispatch [::events/change-tab %])]
+    [:ul.nav.nav-pills
+     [tab :output "Output" change-tab (= current-tab :output)]
+     [tab :python "Python" change-tab (= current-tab :python)]]))
+
 (defn playground-sidebar []
   (let [current-tab @(rf/subscribe [::subs/sidebar-tab])]
     [:div#playground-sidebar.container-fluid.h-100
-     [:div.row
+     [:div.row.px-2
       {:style {:height "3em"
                :background-color "#424242"}}
-      [recom/horizontal-bar-tabs
-       :model (rf/subscribe [::subs/sidebar-tab])
-       :tabs [{:id :output :label "Output"}
-              {:id :python :label "Python"}]
-       :on-change #(rf/dispatch [::events/change-tab %])]]
+
+      [sidebar-tabs current-tab]]
      [:div.row.h-100
       [:div#playground-sidebar.col.py-0.px-2
        {:style {:background-color "#424242"}}
@@ -102,11 +126,9 @@
 
 ;; -------------------------
 ;; Initialize app
-
-
 (defn mount-root []
+  (rf/dispatch-sync [:init])
   (d/render [home-page] (.getElementById js/document "app")))
 
-(defn ^:export init! []
-  (rf/dispatch-sync [:init])
+(defn ^:export init []
   (mount-root))

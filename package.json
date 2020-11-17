@@ -4,7 +4,8 @@
     "shadow-cljs": "^2.10.14"
   },
   "scripts": {
-    "predeploy": "rm -rf ./public/js && shadow-cljs release app",
+    "release": "shadow-cljs release app --config-merge \"$CONFIG\"",
+    "predeploy": "npm run clean && npm run release",
     "deploy": "gh-pages -d public",
     "clean": "rm -rf ./public/js"
   },

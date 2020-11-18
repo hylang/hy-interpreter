@@ -19,3 +19,7 @@
      (if-not (nil? last-value)
        (str stdout "=> " last-value)
        stdout))))
+
+(rf/reg-sub
+ ::compiling?
+ (fn [db _] (:compiling? db)))

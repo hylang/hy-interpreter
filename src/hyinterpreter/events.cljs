@@ -8,7 +8,8 @@
 (rf/reg-event-db
  :init
  (fn [db _]
-   {:sidebar {:tab :output
+   {:compiling? false
+    :sidebar {:tab :output
               :python ""
               :stdout ""
               :stderr ""
@@ -19,7 +20,7 @@
  :submit-code
  (fn [{:keys [db]} [_ code]]
    {:db (-> db
-            (assoc-in [:sidebar :show-twirly] true)
+            (assoc :compiling? true)
             (assoc-in [:sidebar :tab] :output))
     :http-xhrio {:method :post
                  :uri (str REACT_APP_API_BASE "/interpreter/compile")
@@ -44,26 +45,26 @@
 (defmethod compiler-response "COMPILATION_ERROR"
   [db {:strs [traceback lineno offset arrow]}]
   (-> db
-     (assoc-in [:sidebar :stdout] traceback)
-     (assoc-in [:sidebar :last-value] nil)))
+      (assoc-in [:sidebar :stdout] traceback)
+      (assoc-in [:sidebar :last-value] nil)))
 
-(defmethod compiler-response
-  "RUNTIME_ERROR"
+(defmethod compiler-response "RUNTIME_ERROR"
   [db {:strs [traceback lineno]}]
   (-> db
-     (assoc-in [:sidebar :stdout] traceback)
-     (assoc-in [:sidebar :last-value] nil)))
+      (assoc-in [:sidebar :stdout] traceback)
+      (assoc-in [:sidebar :last-value] nil)))
 
 (rf/reg-event-db
  :compiler-response
  (fn [db [_ result]]
-   (compiler-response db result)))
+   (-> db
+       (assoc :compiling? false)
+       (compiler-response result))))
 
 (rf/reg-event-db
  :server-error
  (fn [db [_ error]]
-   (println error)
-   db))
+   (assoc db :compiling? false)))
 
 (rf/reg-event-db
  ::change-tab

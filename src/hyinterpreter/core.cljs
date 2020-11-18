@@ -81,14 +81,22 @@
                 :lineNumbers true}}]))
 
 (defn ^:private sidebar-output []
-  (let [stdout @(rf/subscribe [::subs/stdout])]
-    [:> cm/Controlled
-     {:value stdout
-      :className "h-100 gutterless"
-      :options {:mode "python"
-                :theme "base16-dark"
-                :readOnly "nocursor"
-                :autoCloseBrackets true}}]))
+  (let [stdout @(rf/subscribe [::subs/stdout])
+        show-dots? @(rf/subscribe [::subs/compiling?])]
+    (if show-dots?
+      [:div.h-100.d-flex.justify-content-between
+       {:style {:background-color "#151515"
+                :width "100%"}}
+       [:div.spinner-grow {:role "status"
+                             :style {:margin "auto"}}
+        [:span.sr-only "Loading..."]]]
+      [:> cm/Controlled
+       {:value stdout
+        :className "h-100 gutterless"
+        :options {:mode "python"
+                  :theme "base16-dark"
+                  :readOnly "nocursor"
+                  :autoCloseBrackets true}}])))
 
 (defn tab [sym label dispatch-fn active?]
   [:li.nav-item

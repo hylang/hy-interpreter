@@ -42,12 +42,18 @@
                  :background-color "#424242"}}
         [:div.col {:style {:font "1.5em Roboto, sans-serif"
                            :padding ".5em"}}
-         "Hy"]
+         [:a {:href "https://docs.hylang.org/en/stable/index.html"
+              :style {:cursor "pointer"
+                      :color "white"
+                      :text-decoration "none"}}
+          "Hy"]]
         [:div.col.text-right
-         [:a.btn.m-auto
+         [:a.btn.btn-dark
           {:style {:padding-top ".7em"
                    :font "1.2em Roboto, sans-serif"
-                   :color "#fff"}
+                   :color "#fff"
+                   :margin "auto"
+                   :height "2.5em"}
            :on-click #(rf/dispatch [:submit-code @code])}
           "Run"
           [carrot-right "1.2em"]]]]

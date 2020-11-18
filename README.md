@@ -33,7 +33,7 @@ can be reached at. Save this for setting up the client app.
 The client app is a clojurescript reagent application built
 with `shadow-cljs` and deployed to github pages.
 
-```
+```bash
 # Return to the root repo dir
 cd hy-interpreter
 

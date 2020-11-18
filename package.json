@@ -4,7 +4,7 @@
     "shadow-cljs": "^2.10.14"
   },
   "scripts": {
-    "release": "shadow-cljs release app --config-merge \"$CONFIG\"",
+    "release": "shadow-cljs release app --config-merge \"$(cat ./config.edn)\"",
     "predeploy": "npm run clean && npm run release",
     "deploy": "gh-pages -d public",
     "clean": "rm -rf ./public/js"

@@ -17,3 +17,4 @@ pom.xml.asc
 node_modules/
 .shadow-cljs/
 .envrc
+config.edn

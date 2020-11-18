@@ -3,7 +3,7 @@
             [day8.re-frame.http-fx]
             [ajax.core :as ajax]))
 
-(goog-define REACT_APP_API_BASE "localhost:5000")
+(goog-define REACT_APP_API_BASE "http://localhost:5000")
 
 (rf/reg-event-db
  :init
@@ -44,12 +44,15 @@
 (defmethod compiler-response "COMPILATION_ERROR"
   [db {:strs [traceback lineno offset arrow]}]
   (-> db
-      (assoc-in [:sidebar :stdout] traceback)))
+     (assoc-in [:sidebar :stdout] traceback)
+     (assoc-in [:sidebar :last-value] nil)))
 
 (defmethod compiler-response
   "RUNTIME_ERROR"
   [db {:strs [traceback lineno]}]
-  db)
+  (-> db
+     (assoc-in [:sidebar :stdout] traceback)
+     (assoc-in [:sidebar :last-value] nil)))
 
 (rf/reg-event-db
  :compiler-response
@@ -59,6 +62,7 @@
 (rf/reg-event-db
  :server-error
  (fn [db [_ error]]
+   (println error)
    db))
 
 (rf/reg-event-db

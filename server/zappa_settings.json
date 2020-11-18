@@ -1,0 +1,10 @@
+{
+    "dev": {
+        "app_function": "zappa_init.app",
+        "aws_region": "us-east-2",
+        "profile_name": "default",
+        "project_name": "hy-interpreter",
+        "runtime": "python3.8",
+        "s3_bucket": "alliejo-bucket"
+    }
+}

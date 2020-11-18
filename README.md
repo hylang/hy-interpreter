@@ -17,17 +17,13 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# Init Zappa Settings
-# This requires aws cli to be installed, set up, and
-# a valid ~/.aws/credentials file
-zappa init
+# To run locally, export these env vars before
+# running 'flask run'
+export FLASK_APP=flaskr
+export FLASK_ENV=development
 
-# Deploy the flask app to AWS Lambda
-zappa deploy
+flask run
 ```
-
-`zappa deploy` will print out the base url that the backend
-can be reached at. Save this for setting up the client app.
 
 ### Client
 The client app is a clojurescript reagent application built
@@ -40,6 +36,27 @@ cd hy-interpreter
 # Install the npm dependencies
 npm install
 
+# Start the development server
+npx shadow-cljs watch app
+```
+
+## Deploy
+### Backend
+```bash
+# Init Zappa Settings
+# This requires aws cli to be installed, set up, and
+# a valid ~/.aws/credentials file
+zappa init
+
+# Deploy the flask app to AWS Lambda
+zappa deploy
+```
+
+`zappa deploy` will print out the base url that the backend
+can be reached at. Save this for setting up the client app.
+### Client
+
+```bash
 # To set the endpoint url for this deployment
 # create a file called 'config.edn' that contains the end
 # point url we saved when we ran 'zappa deploy' with the

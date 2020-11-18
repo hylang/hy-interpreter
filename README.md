@@ -41,8 +41,8 @@ cd hy-interpreter
 npm install
 
 # To set the endpoint url for this deployment
-# create a file called `config.edn` that contains the end
-# point url we saved when we ran `zappa deploy` with the
+# create a file called 'config.edn' that contains the end
+# point url we saved when we ran 'zappa deploy' with the
 # following command (Leave the surrounding double quotes in)
 echo '{:closure-defines {hyinterpreter.events/REACT_APP_API_BASE "<ENDPOINT-URL>"}}' > config.edn
 

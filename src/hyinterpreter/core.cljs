@@ -9,6 +9,7 @@
    ["react-codemirror2" :as cm]
    ["react-split-pane" :default SplitPane]
    ["codemirror/mode/python/python"]
+   ["./hy.js"]
    ["codemirror/mode/clojure/clojure"]
    ["codemirror/addon/edit/closebrackets"]))
 
@@ -68,7 +69,7 @@
                                    (= event.key "Enter"))
                           (rf/dispatch [:submit-code @code])))
            :className "h-100"
-           :options {:mode "clojure"
+           :options {:mode "hy"
                      :smartIndent false
                      :electricChars false
                      :theme "material-darker"

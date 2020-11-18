@@ -6,7 +6,7 @@
    [re-com.core :as recom]
    [hyinterpreter.events :as events]
    [hyinterpreter.subs :as subs]
-   ["react-codemirror2" :as cm]
+   ["react-codemirror2" :refer (UnControlled Controlled)]
    ["react-split-pane" :default SplitPane]
    ["codemirror/mode/python/python"]
    ["./hy.js"]
@@ -60,7 +60,7 @@
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
         [:div#playground-editor.col.p-0
-         [:> cm/UnControlled
+         [:> UnControlled
           {:value default-code-snippet
            :onChange (fn [editor data value]
                        (reset! code value))
@@ -78,7 +78,7 @@
 
 (defn ^:private sidebar-python []
   (let [compiled-python @(rf/subscribe [::subs/compiled-python])]
-    [:> cm/Controlled
+    [:> Controlled
      {:value compiled-python
       :className "h-100"
       :options {:mode "python"
@@ -97,7 +97,7 @@
        [:div.spinner-grow {:role "status"
                              :style {:margin "auto"}}
         [:span.sr-only "Loading..."]]]
-      [:> cm/Controlled
+      [:> Controlled
        {:value stdout
         :className "h-100 gutterless"
         :options {:mode "python"

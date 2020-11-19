@@ -33,6 +33,12 @@ html, body {
     color: #719af4;
 }
 
+.btn-dark {
+    background-color: #fff0;
+    border-radius: 0;
+    border: 0;
+    margin-top: 1em;
+}
 
 /* Split Pane */
 .Resizer {

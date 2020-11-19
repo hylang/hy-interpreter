@@ -64,5 +64,5 @@ can be reached at. Save this for setting up the client app.
 echo '{:closure-defines {hyinterpreter.events/REACT_APP_API_BASE "<ENDPOINT-URL>"}}' > config.edn
 
 # Deploy the app to Github Pages
-npm run release
+npm run deploy
 ```

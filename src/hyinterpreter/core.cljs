@@ -1,5 +1,6 @@
 (ns hyinterpreter.core
   (:require
+   [goog.functions :refer [rateLimit]]
    [reagent.core :as r]
    [reagent.dom :as d]
    [re-frame.core :as rf]
@@ -25,6 +26,8 @@
        (map spy)
        (map str.upper)
        (reduce add)))")
+
+(def compile-rate-limit 1000)
 
 ;; -------------------------
 ;; Views
@@ -55,7 +58,7 @@
                    :color "#fff"
                    :margin "auto"
                    :height "2.5em"}
-           :on-click #(rf/dispatch [:submit-code @code])}
+           :on-click (rateLimit #(rf/dispatch [:submit-code @code]) compile-rate-limit)}
           "Run"
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
@@ -64,10 +67,12 @@
           {:value default-code-snippet
            :onChange (fn [editor data value]
                        (reset! code value))
-           :onKeyDown (fn [editor event]
-                        (when (and (.getModifierState event "Control")
-                                   (= event.key "Enter"))
-                          (rf/dispatch [:submit-code @code])))
+           :onKeyDown (rateLimit
+                       (fn [editor event]
+                         (when (and (.getModifierState event "Control")
+                                    (= event.key "Enter"))
+                           (rf/dispatch [:submit-code @code])))
+                       compile-rate-limit)
            :className "h-100"
            :options {:mode "hy"
                      :smartIndent false

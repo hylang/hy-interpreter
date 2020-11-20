@@ -1,6 +1,6 @@
 (ns hyinterpreter.core
   (:require
-   [goog.functions :refer [rateLimit]]
+   [goog.functions :refer [throttle]]
    [reagent.core :as r]
    [reagent.dom :as d]
    [re-frame.core :as rf]
@@ -58,7 +58,7 @@
                    :color "#fff"
                    :margin "auto"
                    :height "2.5em"}
-           :on-click (rateLimit #(rf/dispatch [:submit-code @code]) compile-rate-limit)}
+           :on-click (throttle #(rf/dispatch [:submit-code @code]) compile-rate-limit)}
           "Run"
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
@@ -67,7 +67,7 @@
           {:value default-code-snippet
            :onChange (fn [editor data value]
                        (reset! code value))
-           :onKeyDown (rateLimit
+           :onKeyDown (throttle
                        (fn [editor event]
                          (when (and (.getModifierState event "Control")
                                     (= event.key "Enter"))

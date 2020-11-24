@@ -7,13 +7,14 @@ html, body {
     height: 100%
 }
 
+
 #playground-editor .CodeMirror {
-    height: 100%;
+    height: calc(100vh - 3em);
     width: 100%;
 }
 
 #playground-sidebar .CodeMirror {
-    height: 100%;
+    height: calc(100vh - 3em);
     width: 100%;
 }
 

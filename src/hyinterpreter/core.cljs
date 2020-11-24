@@ -47,7 +47,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget massa ur
       [:div.container-fluid.h-100.position-absolute
        [:div.row
         {:style {:height "3em"
-                 :background-color "#424242"}}
+                 :background-color "#343131"}}
         [:div.col {:style {:font "1.5em Roboto, sans-serif"
                            :padding ".5em"}}
          [:a {:href "https://docs.hylang.org/en/stable/index.html"
@@ -67,7 +67,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget massa ur
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
         [:div#playground-editor.col.p-0.h-100
-         {:style {:background "#424242"}}
+         {:style {:background "343131"}}
          [:> UnControlled
           {:value default-code-snippet
            :onChange (fn [editor data value]
@@ -136,12 +136,12 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget massa ur
     [:div#playground-sidebar.container-fluid.h-100
      [:div.row.px-2
       {:style {:height "3em"
-               :background-color "#424242"}}
+               :background-color "#343131"}}
 
       [sidebar-tabs current-tab]]
      [:div.row.h-100
       [:div#playground-sidebar.col.py-0.px-2
-       {:style {:background-color "#424242"}}
+       {:style {:background-color "#343131"}}
        (case current-tab
          :output [sidebar-output]
          :python [sidebar-python])]]]))

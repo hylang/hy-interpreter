@@ -29,6 +29,10 @@
 
 (def compile-rate-limit 1000)
 
+(def lorem-ipsum "
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus eget massa urna. Maecenas porta ut turpis ac blandit. Duis enim purus, vulputate ac efficitur nec, elementum sed ante. Duis eleifend lacinia eros eu fermentum. Sed rhoncus, mi ut fermentum lobortis, arcu sapien mollis felis, ac luctus nisl turpis vel enim. Donec vehicula libero porta dolor lacinia, in vestibulum eros vulputate. Nullam quis magna orci. Vestibulum at malesuada nunc, vel suscipit eros. Donec at lectus tellus. Pellentesque at magna nisi. Fusce vitae mollis neque. Donec auctor diam ac ultrices vestibulum. Duis sit amet mi risus.
+")
+
 ;; -------------------------
 ;; Views
 (defn carrot-right [size]
@@ -40,7 +44,7 @@
 (defn editor []
   (let [code (r/atom default-code-snippet)]
     (fn []
-      [:div.container-fluid.h-100
+      [:div.container-fluid.h-100.position-absolute
        [:div.row
         {:style {:height "3em"
                  :background-color "#424242"}}
@@ -62,7 +66,8 @@
           "Run"
           [carrot-right "1.2em"]]]]
        [:div.row.h-100
-        [:div#playground-editor.col.p-0
+        [:div#playground-editor.col.p-0.h-100
+         {:style {:background "#424242"}}
          [:> UnControlled
           {:value default-code-snippet
            :onChange (fn [editor data value]
@@ -79,7 +84,9 @@
                      :electricChars false
                      :theme "material-darker"
                      ;; :autoCloseBrackets true
-                     :lineNumbers true}}]]]])))
+
+                     :lineNumbers true}}]
+         ]]])))
 
 (defn ^:private sidebar-python []
   (let [compiled-python @(rf/subscribe [::subs/compiled-python])]

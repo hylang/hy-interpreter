@@ -21,7 +21,7 @@
 
 (require [hy.contrib.walk [let]])
 
-(setv bp (Blueprint "interpreter" --name-- :url-prefix "/interpreter"))
+(setv bp (Blueprint "interpreter" __name__ :url-prefix "/interpreter"))
 
 (defn ast->python [exec-ast eval-ast]
   (try
@@ -51,23 +51,23 @@
         stderr (io.StringIO)
 
         last-value
-        (with [_ (redirect_stdout stdout) (redirect-stderr stderr)]
-              (hy-eval ast module.--dict-- module :filename filename :source source))]
+        (with [_ (redirect_stdout stdout) _ (redirect-stderr stderr)]
+              (hy-eval ast module.__dict__ module :filename filename :source source))]
     (dict :result "SUCCESS"
           :stdout (stdout.getvalue)
           :stderr (stderr.getvalue)
           :python python
           :last_value (repr last-value))))
 
-(defn run-command [source &optional filename]
+(defn run-command [source [filename None]]
   ;; TODO: Filter out the context from the stack trace
   ;; because we only want to show values from the repl
   ;; and not anything todo with this api
-  (let [--main-- (importlib.import-module "__main__")]
+  (let [__main__ (importlib.import-module "__main__")]
     (try
       (let [hy-ast      (hy-parse source :filename filename)
             asts        (hy-compile hy-ast
-                                    --main--
+                                    __main__
                                     :root ast.Interactive
                                     :get-expr True
                                     :filename filename
@@ -77,7 +77,7 @@
         ;; exceptions out of the stack frame
         (with [(filtered-hy-exceptions)]
               (try
-                (eval-ast hy-ast --main-- filename source python-code)
+                (eval-ast hy-ast __main__ filename source python-code)
                 ;; Evaling a hy-ast is just executing python code so we need
                 ;; to catch all python exceptions
                 (except [e Exception]

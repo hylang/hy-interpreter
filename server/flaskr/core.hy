@@ -7,7 +7,7 @@
 (require [hy.contrib.walk [let]])
 
 (defn create-app []
-  (let [app (Flask --name--)]
+  (let [app (Flask __name__)]
     (setv app.secret-key (os.urandom 24))
     (CORS app)
 

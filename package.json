@@ -15,7 +15,6 @@
     "react": "16.13.0",
     "react-codemirror2": "^7.2.1",
     "react-dom": "16.13.0",
-    "react-split-pane": "^0.1.92",
-    "tailwindcss": "^1.9.6"
+    "react-split-pane": "^0.1.92"
   }
 }

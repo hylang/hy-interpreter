@@ -1,3 +1,5 @@
+# Obsolete as of 2023. See https://github.com/hylang/hyhomepage instead.
+
 # Try Hy Online Repl
 
 ## Install
